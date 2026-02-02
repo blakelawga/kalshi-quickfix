@@ -25,7 +25,7 @@ import (
 	"strconv"
 	"sync"
 
-	proxyproto "github.com/pires/go-proxyproto"
+	"github.com/pires/go-proxyproto"
 
 	"github.com/quickfixgo/quickfix/config"
 )
@@ -45,6 +45,7 @@ type Acceptor struct {
 	dynamicQualifierCount int
 	dynamicSessionChan    chan *session
 	sessionAddr           sync.Map
+	sessionConn           sync.Map
 	sessionHostPort       map[SessionID]int
 	listeners             map[string]net.Listener
 	connectionValidator   ConnectionValidator
@@ -137,6 +138,11 @@ func (a *Acceptor) Start() (err error) {
 	for _, listener := range a.listeners {
 		go a.listenForConnections(listener)
 	}
+
+	if a.globalLog != nil {
+		a.globalLog.OnEvent("Started Kalshi FIX acceptor")
+	}
+
 	return
 }
 
@@ -164,6 +170,22 @@ func (a *Acceptor) Stop() {
 			return
 		}
 	}
+}
+
+// StopSession logs out a specific session and closes its connection.
+func (a *Acceptor) StopSession(sessionID SessionID) error {
+	session, ok := lookupSession(sessionID)
+	if !ok || session == nil {
+		return errUnknownSession
+	}
+	if session.IsLoggedOn() {
+		_ = session.initiateLogout("Session logout requested")
+	}
+	if conn, ok := a.sessionConn.Load(sessionID); ok && conn != nil {
+		_ = conn.(net.Conn).Close()
+		a.sessionConn.Delete(sessionID)
+	}
+	return nil
 }
 
 // RemoteAddr gets remote IP address for a given session.
@@ -319,10 +341,12 @@ func (a *Acceptor) handleConnection(netConn net.Conn) {
 		}
 	}
 
-	sessID := SessionID{BeginString: string(beginString),
+	sessID := SessionID{
+		BeginString:  string(beginString),
 		SenderCompID: string(targetCompID), SenderSubID: string(targetSubID), SenderLocationID: string(targetLocationID),
 		TargetCompID: string(senderCompID), TargetSubID: string(senderSubID), TargetLocationID: string(senderLocationID),
 	}
+	defer a.sessionConn.Delete(sessID)
 
 	localConnectionPort := netConn.LocalAddr().(*net.TCPAddr).Port
 	if expectedPort, ok := a.sessionHostPort[sessID]; ok && expectedPort != localConnectionPort {
@@ -359,6 +383,7 @@ func (a *Acceptor) handleConnection(netConn net.Conn) {
 	}
 
 	a.sessionAddr.Store(sessID, netConn.RemoteAddr())
+	a.sessionConn.Store(sessID, netConn)
 	msgIn := make(chan fixIn, session.InChanCapacity)
 	msgOut := make(chan []byte)
 
