@@ -172,14 +172,14 @@ func (a *Acceptor) Stop() {
 	}
 }
 
-// StopSession logs out a specific session and closes its connection.
-func (a *Acceptor) StopSession(sessionID SessionID) error {
+// StopSession logs out a specific session with a reason and closes its connection.
+func (a *Acceptor) StopSession(sessionID SessionID, reason string) error {
 	session, ok := lookupSession(sessionID)
 	if !ok || session == nil {
 		return errUnknownSession
 	}
 	if session.IsLoggedOn() {
-		_ = session.initiateLogout("Session logout requested")
+		_ = session.initiateLogout(reason)
 	}
 	if conn, ok := a.sessionConn.Load(sessionID); ok && conn != nil {
 		_ = conn.(net.Conn).Close()
