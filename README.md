@@ -8,7 +8,7 @@ Open Source [FIX Protocol](http://www.fixprotocol.org/) library implemented in G
 See v0.9.0 release notes [here](https://github.com/quickfixgo/quickfix/releases/tag/v0.9.0)
 
 
-## About
+## About QuickFix
 <p>QuickFIX/Go is a <a href="https://www.fixtrading.org/">FIX Protocol Community</a> implementation for the <a href="https://golang.org">Go programming language</a>.</p> 
 
 <ul>
