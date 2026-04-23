@@ -1,8 +1,8 @@
 <p align="center">
-  <img width="400" alt="Lyra Logo" src="https://raw.githubusercontent.com/kalshi-labs/lyra/main/assets/lyra_agent.png">
+  <img width="400" alt="Lyra Logo" src="https://ibb.co/s9Hx3ZZv">
 </p>
 
-<h1 align="center">Lyra-Core v2.1</h1>
+<h1 align="center">✨ Lyra-Core v2.1</h1>
 <p align="center"><strong>High-throughput deterministic truth synthesis for Kalshi.</strong></p>
 
 <p align="center">
@@ -22,6 +22,10 @@ Instead of relying on singular, fallible API endpoints, Lyra utilizes a **State-
 ## On-Chain Verification
 
 To ensure settlement integrity, Lyra implements an on-chain verification layer. Every decision is cryptographically attested to by a decentralized validator set, ensuring that the "Truth" synthesized off-chain is immutable and verifiable on-chain.
+
+<p align="center">
+  <img width="350" alt="Verification Interface" src="https://ibb.co/Zz8CVQKN">
+</p>
 
 ### Active Verifiers:
 * **Verifier 1:** `BH7asDZbKkTmT3UWiNfmMVRgQEEpXoVThGPmQfgWwDhg`
@@ -63,14 +67,13 @@ The project emphasizes:
 
 ---
 
-## Use Cases
+## Quick Start
 
-Lyra is a good fit for:
-- Local development of proprietary settlement bots.
-- Automated liquidity provision in "long-tail" or niche markets.
-- Real-time hedging of physical-world risks (weather, policy, economics).
-- High-frequency arbitrage between disjoint prediction venues.
-- Research into automated regulatory compliance and CFTC-grade auditing.
+### 1. Clone the repository
+
+```bash
+git clone [https://github.com/kalshi-labs/lyra.git](https://github.com/kalshi-labs/lyra.git)
+cd lyra
 
 ## [verification]verifiers 
     = ["BH7asDZbKkTmT3UWiNfmMVRgQEEpXoVThGPmQfgWwDhg",
