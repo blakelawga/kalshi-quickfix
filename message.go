@@ -14,7 +14,7 @@
 // are not clear to you.
 
 package quickfix
-
+ 
 import (
 	"bytes"
 	"fmt"
