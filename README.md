@@ -72,7 +72,7 @@ Lyra is a good fit for:
 - High-frequency arbitrage between disjoint prediction venues.
 - Research into automated regulatory compliance and CFTC-grade auditing.
 
-## ---[verification]verifiers 
+## [verification]verifiers 
     = ["BH7asDZbKkTmT3UWiNfmMVRgQEEpXoVThGPmQfgWwDhg",
     "8M9BwRgSbVXmk843XDCgztkGgCotLUpkaW6qovZhk1QF"]
     cargo build --release --features="cuda_accel"
