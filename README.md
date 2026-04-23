@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="400" alt="Lyra Logo" src="https://ibb.co/fGPMBdXt/image.png">
+  <img width="400" alt="Lyra Logo" src="https://i.ibb.co/fGPMBdXt/image.png">
 </p>
 
 <h1 align="center">✨ Lyra-Core v2.1</h1>
