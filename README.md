@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="400" alt="Lyra Logo" src="https://ibb.co/s9Hx3ZZv">
+  <img width="400" alt="Lyra Logo" src="https://i.ibb.co/s9Hx3ZZv/image.png">
 </p>
 
 <h1 align="center">✨ Lyra-Core v2.1</h1>
@@ -24,7 +24,7 @@ Instead of relying on singular, fallible API endpoints, Lyra utilizes a **State-
 To ensure settlement integrity, Lyra implements an on-chain verification layer. Every decision is cryptographically attested to by a decentralized validator set, ensuring that the "Truth" synthesized off-chain is immutable and verifiable on-chain.
 
 <p align="center">
-  <img width="350" alt="Verification Interface" src="https://ibb.co/Zz8CVQKN">
+  <img width="350" alt="Verification Interface" src="https://i.ibb.co/Zz8CVQKN/image.png">
 </p>
 
 ### Active Verifiers:
@@ -67,6 +67,13 @@ The project emphasizes:
 
 ---
 
+## Quick Start
+
+### 1. Clone the repository
+
+```bash
+git clone [https://github.com/kalshi-labs/lyra.git](https://github.com/kalshi-labs/lyra.git)
+cd lyra
 ## Quick Start
 
 ### 1. Clone the repository
