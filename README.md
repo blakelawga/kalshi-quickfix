@@ -1,156 +1,90 @@
-# QuickFIX/Go
+<p align="center">
+  <img width="400" alt="Lyra Logo" src="https://raw.githubusercontent.com/kalshi-labs/lyra/main/assets/lyra_agent.png">
+</p>
 
-[![Build Status](https://github.com/quickfixgo/quickfix/workflows/CI/badge.svg)](https://github.com/quickfixgo/quickfix/actions) [![GoDoc](https://godoc.org/github.com/quickfixgo/quickfix?status.png)](https://godoc.org/github.com/quickfixgo/quickfix) [![Go Report Card](https://goreportcard.com/badge/github.com/quickfixgo/quickfix)](https://goreportcard.com/report/github.com/quickfixgo/quickfix)
+<h1 align="center">✨ Lyra-Core v2.1</h1>
+<p align="center"><strong>High-throughput deterministic truth synthesis for Kalshi.</strong></p>
 
-Open Source [FIX Protocol](http://www.fixprotocol.org/) library implemented in Go
+<p align="center">
+  A distributed, low-latency execution layer for autonomous event-settlement and Bayesian truth-verification in regulated prediction markets.
+</p>
 
-### Looking for help with `MessageStore` syntax changes?
-See v0.9.0 release notes [here](https://github.com/quickfixgo/quickfix/releases/tag/v0.9.0)
+---
 
+## Overview
 
-## About QuickFix
-<p>QuickFIX/Go is a <a href="https://www.fixtrading.org/">FIX Protocol Community</a> implementation for the <a href="https://golang.org">Go programming language</a>.</p> 
+**Lyra** is a specialized, local-first settlement engine designed for the **Kalshi** ecosystem. It is engineered for developers who require sub-millisecond data triangulation and deterministic market resolution without the overhead of centralized oracular consensus.
 
-<ul>
-  <li>100% free and open source with a liberal <a href="https://github.com/quickfixgo/quickfix/blob/master/LICENSE.txt">license</a></li>
-  <li>Supports FIX versions 4.0 - 5.0SP2</li>
-  <li>Runs on any hardware and operating system supported by Go (1.21+ required)</li>
-  <li>Spec driven run-time message validation</li>
-  <li>Spec driven code generation of type-safe FIX messages, fields, and repeating groups</li>
-  <li>Support for protocol customizations</li>
-  <li>Session state storage options: SQL, MongoDB, On-disk, or In-memory</li>
-  <li>Logging options: File, Screen</li>
-  <li>Failover and High Availability</li>
-  <li>Daily and weekly scheduling of session connections</li>
-  <li>Integrated support for SSL communicaitons</li>
-  <li>Automated unit and acceptance tests</li>
-  <li><a href="https://www.connamara.com/">Commercial Support available</a></li>
-</ul>
+Instead of relying on singular, fallible API endpoints, Lyra utilizes a **State-Space Search** model to map real-world entropy into binary finality ($S \to \{0, 1\}$). It collapses the infrastructure burden of event verification into a lightweight, high-performance runtime optimized for cold-start investigation and zero-trust auditability.
 
-<br>
-<img width="208" alt="Sponsored by Connamara" src="https://user-images.githubusercontent.com/3065126/282546730-16220337-4960-48ae-8c2f-760fbaedb135.png">
+---
 
-## Installation
+## On-Chain Verification
 
-With [Go module](https://github.com/golang/go/wiki/Modules) support, simply add the following import
+To ensure settlement integrity, Lyra implements an on-chain verification layer. Every decision is cryptographically attested to by a decentralized validator set, ensuring that the "Truth" synthesized off-chain is immutable and verifiable on-chain.
 
-```
-import "github.com/quickfixgo/quickfix"
-```
+### Active Verifiers:
+* **Verifier 1:** `BH7asDZbKkTmT3UWiNfmMVRgQEEpXoVThGPmQfgWwDhg`
+* **Verifier 2:** `8M9BwRgSbVXmk843XDCgztkGgCotLUpkaW6qovZhk1QF`
 
-to your code, and then `go [build|run|test]` will automatically fetch the necessary dependencies.
+Lyra generates **Zero-Knowledge Proofs (zk-SNARKs)** of its data retrieval and Bayesian synthesis, which are then validated by the above addresses before the final market resolution is pushed to the exchange.
 
-Otherwise, run the following Go command to install the `quickfix` package:
+---
 
-```sh
-go get -u github.com/quickfixgo/quickfix
-```
+## System Overview
 
-## Getting Started
+Lyra acts as a compact, concurrent runtime for truth-seeking agents. It reduces the operational complexity of the broader oracle stack by condensing investigation, synthesis, and cryptographic signing into a single, performance-tuned environment.
 
-* [QuickFIX User Manual](https://quickfixengine.org/go/documentation/)
-* [Go API Documentation](https://godoc.org/github.com/quickfixgo/quickfix)
-* See [examples](https://github.com/quickfixgo/examples) for some simple examples of using QuickFIX/Go.
+The project emphasizes:
 
-## FIX Messaging Model
-To send and receive messages, your application will need a few additional packages.
+- **Non-Blocking I/O** utilizing `io_uring` for massive parallel data ingestion.
+- **On-Chain Attestation** providing a transparent audit trail for all settled contracts.
+- **LLM-Augmented Reasoning** for parsing complex legislative or regulatory text.
+- **Minimal Operational Footprint** compared to full cloud-based oracle networks.
 
-QuickFIX/Go maintains separate packages for tags, fields, enums, messages, and message components auto-generated from the FIX 4.0 - FIX5.0SP2 XML specifications-
+---
 
-* [Tag](https://github.com/quickfixgo/tag)
-* [Field](https://github.com/quickfixgo/field)
-* [Enum](https://github.com/quickfixgo/enum)
-* [FIX 4.0](https://github.com/quickfixgo/fix40)
-* [FIX 4.1](https://github.com/quickfixgo/fix41)
-* [FIX 4.2](https://github.com/quickfixgo/fix42)
-* [FIX 4.3](https://github.com/quickfixgo/fix43)
-* [FIX 4.4](https://github.com/quickfixgo/fix44)
-* [FIX 5.0](https://github.com/quickfixgo/fix50)
-* [FIX 5.0 SP1](https://github.com/quickfixgo/fix50sp1)
-* [FIX 5.0 SP2](https://github.com/quickfixgo/fix50sp2)
-* [FIXT 1.1](https://github.com/quickfixgo/fixt11)
+## Key Features
 
-For most FIX applications, these generated resources are sufficient. Custom FIX applications may generate source specific to the FIX spec of that application using the `generate-fix` tool included with QuickFIX/Go.
+- **Deterministic Logic Engine** Uses Z3 SMT solvers to ensure settlement decisions strictly adhere to contract invariants.
+- **Recursive Source Validation (RSV)** Eliminates single-point-of-failure by cross-referencing $N$ independent data streams.
+- **High-Concurrency Ingress** Optimized Rust-based ingestors for real-time WebSocket and gRPC feed processing.
+- **Explainable Evidence Bundles** Generates immutable, cryptographically signed snapshots of the data state at $t_0$.
+- **Zero-Trust Finality** Integrated on-chain verification ensures that no single entity can manipulate the settlement outcome.
 
-Following installation, `generate-fix` is installed to `$GOPATH/bin/generate-fix`. Run `$GOPATH/bin/generate-fix --help` for usage instructions.
+---
 
-## General Support
-<h3>Github Discussions</h3>
+## Technology Stack
 
-<p>Our <a href="https://github.com/quickfixgo/quickfix/discussions/categories/q-a">Github Discussions Board</a> is free, public, and easily searchable. It’s the preferred method of user support from the QuickFIX/Go team.
+- **Rust** Core runtime implemented for memory safety and zero-cost abstractions.
+- **Solana/SVM** High-speed on-chain verification layer for settlement attestations.
+- **vLLM / TensorRT** Local inference engine for high-speed contextual reasoning.
+- **NATS JetStream** Lightweight, distributed messaging for ultra-low latency.
 
-<p>Please provide as much detail as you can when asking a question, and include relevant configurations and code snippets.</p>
+---
 
-<h3>FIX Protocol</h3>
+## Use Cases
 
-<p>More information about the FIX protocol can be found at the <a href="http://fixtradingcommunity.org">FIX Protocol website</a>.
+Lyra is a good fit for:
+- Local development of proprietary settlement bots.
+- Automated liquidity provision in "long-tail" or niche markets.
+- Real-time hedging of physical-world risks (weather, policy, economics).
+- High-frequency arbitrage between disjoint prediction venues.
+- Research into automated regulatory compliance and CFTC-grade auditing.
 
-<h3>Bugs and Issues</h3>
+---
+[verification]
+verifiers = [
+    "BH7asDZbKkTmT3UWiNfmMVRgQEEpXoVThGPmQfgWwDhg",
+    "8M9BwRgSbVXmk843XDCgztkGgCotLUpkaW6qovZhk1QF"
+]
+cargo build --release --features="cuda_accel"
+./target/release/lyra --contract-id "WILL-FED-HIKE-MAY" --live
 
-<p>Bugs and issues can be submitted by anyone through our GitHub repository issues list.</p>
+## Quick Start
 
-<p><strong>Note:</strong> Please do not submit questions or help requests to the issues list. It is for bugs and issues. If you need help, please use the Discussions board as described above and you’ll be able to send your question to the entire community.</p>
+### 1. Clone the repository
 
-<p><a href="https://github.com/quickfixgo/quickfix/issues">GitHub Issues</a></p>
-
-<p>Please provide sample code, logs, and a description of the problem when the issue is submitted.</p>
-
-<p>We will try to address new issues as quickly as possible, and we welcome contributions for bug fixes and new features!</p>
-
-## Commercial Support
-<p><a href="https://connamara.com">Connamara Systems</a> offers commercial support for developers who are integrating any of the QuickFIX implementations (Go, C++, Java, .NET). The support is offered in 10-hour bundles and grants developers access, via telephone or email, to the team that created QuickFIX/Go, QuickFIX/n, and are maintainers of QuickFIX.</p>
-
-<p>In addition to offering QuickFIX support, Connamara delivers Made-To-Measure Trading Solutions by bridging the gap between buy and build. By using internally developed trading platform components, Connamara delivers the best of off-the-shelf ISV solutions and custom application development. Coupled with Connamara’s unique licensing model, trading firms can get the best of both build and buy.</p>
-
-
-## Contributing
-
-If you wish to work on QuickFIX/Go itself, you will need [Docker](https://docs.docker.com/get-docker/) and [VSCode](https://code.visualstudio.com/download) on your machine.
-
-* Clone the repo and open it with VSCode with Docker running
-* This repo comes with vscode devcontainer configs in `./.devcontainer/`
-* Click the pop-up to re-open the project in the Dev Container
-* This opens the project in a docker container pre-configured with everything you need
-
-### Build and Test
-
-The default make target runs [go vet](https://godoc.org/golang.org/x/tools/cmd/vet) and unit tests.
-
-```sh
-make
-```
-
-If this exits with exit status 0, then everything is working!
-
-### Generated Code
-
-Generated code from the FIX40-FIX50SP2 specs are available as separate repos under the [QuickFIX/Go organization](https://github.com/quickfixgo).  The source specifications for this generated code is located in `spec/`.  Generated code can be identified by the `.generated.go` suffix.  Any changes to generated code must be captured by changes to source in `cmd/generate-fix`.  After making changes to the code generator source, run the following to re-generate the source
-
-```sh
-make generate
-```
-
-If you are making changes to the generated code, please create Pull Requests for these changes for the affected repos.
-
-### Acceptance Tests
-
-QuickFIX/Go has a comprehensive acceptance test suite covering the FIX protocol.  These are the same tests used across all QuickFIX implementations.
-
-QuickFIX/Go acceptance tests depend on ruby in path, if you are using the dev container, it is already installed
-
-To run acceptance tests,
-
-```sh
-# generate code locally
-make generate
-
-# build acceptance test rig
-make build-test-srv
-
-# run acceptance tests
-make accept
-```
-
-## Licensing
-
-This software is available under the QuickFIX Software License. Please see the [LICENSE.txt](https://github.com/quickfixgo/quickfix/blob/main/LICENSE.txt) for the terms specified by the QuickFIX Software License.
+```bash
+git clone [https://github.com/kalshi-labs/lyra.git](https://github.com/kalshi-labs/lyra.git)
+cd lyra
