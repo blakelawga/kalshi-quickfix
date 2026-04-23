@@ -16,7 +16,7 @@
 package quickfix
 
 import (
-	"fmt"
+	"fmt" 
 	"time"
 
 	"github.com/quickfixgo/quickfix/internal"
